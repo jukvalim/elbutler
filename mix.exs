@@ -24,7 +24,7 @@ defmodule ElButler.MixProject do
     [
       {:quantum, "~> 2.3"},
       {:timex, "~> 3.0"},
-      {:httpoison, "~> 1.6"}
+      {:telegram, git: "https://github.com/visciang/telegram.git"}
     ]
   end
 end
