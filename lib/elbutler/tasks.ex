@@ -95,16 +95,16 @@ defmodule ElButler.Tasks do
 
   def last_chapter(name) do
     {:ok, table} = :dets.open_file(:chapters, type: :set)
-    res = :dets.lookup(table, "num")
+    res = :dets.lookup(table, name)
 
     case res do
-      [{"num", num}] -> num
+      [{_name, num}] -> num
       _ -> 0
     end
   end
 
   def set_last_chapter(name, chapternum) do
     {:ok, table} = :dets.open_file(:chapters, type: :set)
-    :dets.insert(table, {"num", chapternum})
+    :dets.insert(table, {name, chapternum})
   end
 end
