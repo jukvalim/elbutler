@@ -39,9 +39,9 @@ defmodule ElButler.Tasks do
     case newest_chapter do
       [chapter_num] ->
         chapter_num = String.to_integer(chapter_num)
+        set_last_chapter(name, chapter_num)
 
-        if chapter_num > old_chapters_count do
-          set_last_chapter(name, chapter_num)
+        if old_chapters_count > 0 && chapter_num > old_chapters_count do
           ElButler.Notifications.notify_phone("New Chapter of #{name} is in!")
           {:new_chapters, chapter_num}
         else
@@ -61,10 +61,9 @@ defmodule ElButler.Tasks do
     case cd do
       [chapter_num, chapter_id] ->
         old_chapters_count = last_chapter(name)
+        set_last_chapter(name, chapter_num)
 
-        if chapter_num > old_chapters_count do
-          set_last_chapter(name, chapter_num)
-
+        if old_chapters_count > 0 && chapter_num > old_chapters_count do
           new_chapter_url =
             String.replace(
               chapter_url_template,
