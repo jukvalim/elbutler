@@ -10,6 +10,7 @@ config :elbutler, ElButler.Scheduler,
     {"@hourly", {ElButler.Tasks, :check_worth_the_candle, []}},
     # {"@hourly", fn -> ElButler.Tasks.check_hoc() end},
     {"@hourly", {ElButler.Tasks, :check_hoc, []}},
+    {"@hourly", {ElButler.Tasks, :check_dcc, []}},
     # {"@hourly", fn -> ElButler.Tasks.check_pod() end}
     {"@hourly", {ElButler.Tasks, :check_pod, []}}
     # {"* * * * *",      fn ->  System.cmd("say", [("minute " <> Integer.to_string DateTime.utc_now().minute)]) end},

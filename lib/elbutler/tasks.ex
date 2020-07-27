@@ -1,6 +1,7 @@
 defmodule ElButler.Tasks do
   @wtc_chapter_regex ~r|<dd class="chapters">.*>(?<chapter>[[:digit:]]+)</a>[/\w]|
   @hoc_chapter_regex ~r|/fiction/32502/heart-of-cultivation/chapter/(?<chapter_id>[[:digit:]]+)/(?<chapter>[[:digit:]]+)-|
+  @dcc_chapter_regex ~r|/fiction/29358/dungeon-crawler-carl/chapter/(?<chapter_id>[[:digit:]]+)/chapter-(?<chapter>[[:digit:]]+)|
   @pod_chapter_regex ~r|<dd> <a style="" href="(?<chapter_id>[[:digit:]]+).html">(?<chapter>[[:digit:]]+) \w+</a></dd>|
 
   def check_worth_the_candle() do
@@ -17,6 +18,15 @@ defmodule ElButler.Tasks do
       "HoC",
       @hoc_chapter_regex,
       "https://www.royalroad.com/fiction/32502/heart-of-cultivation/chapter/{chapter_id}/1-a-fallen-prodigy-1"
+    )
+  end
+
+  def check_dcc() do
+    check_webfiction_index(
+      "https://www.royalroad.com/fiction/29358/dungeon-crawler-carl",
+      "DCC",
+      @dcc_chapter_regex,
+      "https://www.royalroad.com/fiction/29358/dungeon-crawler-carl/chapter/{chapter_id}/chapter-1"
     )
   end
 
