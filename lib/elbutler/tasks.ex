@@ -2,7 +2,7 @@ defmodule ElButler.Tasks do
   @wtc_chapter_regex ~r|<dd class="chapters">.*>(?<chapter>[[:digit:]]+)</a>[/\w]|
   @hoc_chapter_regex ~r|/fiction/32502/heart-of-cultivation/chapter/(?<chapter_id>[[:digit:]]+)/(?<chapter>[[:digit:]]+)-|
   @dcc_chapter_regex ~r|/fiction/29358/dungeon-crawler-carl/chapter/(?<chapter_id>[[:digit:]]+)/chapter-(?<chapter>[[:digit:]]+)|
-  @pod_chapter_regex ~r|<dd> <a style="" href="(?<chapter_id>[[:digit:]]+).html">(?<chapter>[[:digit:]]+) \w+</a></dd>|
+  @pod_chapter_regex ~r|<a style="" class='chapter-item' href="/Paragon-of-Destruction/(?<chapter_id>[[:digit:]]+).html"><div class='chapter-info'><p class='chapter-name'>(?<chapter>[[:digit:]]+) [\w\s]+</p></div></a>|
 
   def check_worth_the_candle() do
     check_webfiction(
@@ -41,7 +41,6 @@ defmodule ElButler.Tasks do
 
   defp check_webfiction(url, name, chapter_regex) do
     resp = Tesla.get!(url)
-    IO.puts(resp.body)
     newest_chapter = Regex.run(chapter_regex, resp.body, capture: :all_but_first)
 
     old_chapters_count = last_chapter(name)
