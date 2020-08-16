@@ -3,6 +3,7 @@ defmodule ElButler.Tasks do
   @hoc_chapter_regex ~r|/fiction/32502/heart-of-cultivation/chapter/(?<chapter_id>[[:digit:]]+)/(?<chapter>[[:digit:]]+)-|
   @dcc_chapter_regex ~r|/fiction/29358/dungeon-crawler-carl/chapter/(?<chapter_id>[[:digit:]]+)/chapter-(?<chapter>[[:digit:]]+)|
   @pod_chapter_regex ~r|<a class='chapter-item' href="/Paragon-of-Destruction/(?<chapter_id>[[:digit:]]+).html"><div class='chapter-info'><p class='chapter-name'>(?<chapter>[[:digit:]]+) [\w\s]+</p></div></a>|
+  @fod_chapter_regex ~r|/fiction/21188/forge-of-destiny/chapter/(?<chapter_id>[[:digit:]]+)/|
 
   def check_worth_the_candle() do
     check_webfiction(
@@ -39,6 +40,15 @@ defmodule ElButler.Tasks do
     )
   end
 
+  def check_fod() do
+    check_webfiction_index(
+      "https://www.royalroad.com/fiction/21188/forge-of-destiny",
+      "FoD",
+      @fod_chapter_regex,
+      "https://www.royalroad.com/fiction/21188/forge-of-destiny/chapter/{chapter_id}/chapter-1"
+    )
+  end
+
   defp check_webfiction(url, name, chapter_regex) do
     resp = Tesla.get!(url)
     newest_chapter = Regex.run(chapter_regex, resp.body, capture: :all_but_first)
@@ -69,33 +79,41 @@ defmodule ElButler.Tasks do
 
     case cd do
       [chapter_num, chapter_id] ->
-        old_chapters_count = last_chapter(name)
-        set_last_chapter(name, chapter_num)
-
-        if old_chapters_count > 0 && chapter_num > old_chapters_count do
-          new_chapter_url =
-            String.replace(
-              chapter_url_template,
-              "{chapter_id}",
-              chapter_id
-            )
-
-          ElButler.Notifications.notify_phone("New Chapter of #{name} is in! #{new_chapter_url}")
-          {:new_chapters, chapter_num}
-        else
-          {:no_new_chapters, chapter_num}
-        end
-
+        send_new_chapter_notification(name, chapter_url_template, chapter_id, chapter_num)
+      [chapter_id] ->
+        send_new_chapter_notification(name, chapter_url_template, chapter_id)
       _ ->
         ElButler.Notifications.notify_phone("Can't find #{name} chapter number...")
         {:error, "Can't find #{name} chapter number..."}
     end
   end
 
+  defp send_new_chapter_notification(name, chapter_url_template, chapter_id, chapter_num \\ nil) do
+    chapter_num = if chapter_num == nil, do: chapter_id, else: chapter_num
+    last_chapter_num = last_chapter(name)
+    set_last_chapter(name, chapter_num)
+
+    if last_chapter_num > 0 && chapter_num > last_chapter_num do
+      new_chapter_url =
+        String.replace(
+          chapter_url_template,
+          "{chapter_id}",
+          Integer.to_string(chapter_id)
+        )
+
+      ElButler.Notifications.notify_phone("New Chapter of #{name} is in! #{new_chapter_url}")
+      {:new_chapters, chapter_num}
+
+    else
+      {:no_new_chapters, chapter_num}
+    end
+
+  end
+
   def extract_chapter_data(body, chapter_regex) do
     chapter_data =
       Regex.scan(chapter_regex, body, capture: :all_names)
-      |> Enum.map(fn l -> [String.to_integer(Enum.at(l, 0)), Enum.at(l, 1)] end)
+      |> Enum.map(fn l -> Enum.map(l, fn d -> String.to_integer(d) end) end)
       |> Enum.sort(fn first, second -> Enum.at(first, 0) >= Enum.at(second, 0) end)
 
     List.first(chapter_data)
