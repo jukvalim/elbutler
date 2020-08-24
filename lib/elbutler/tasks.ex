@@ -127,10 +127,12 @@ defmodule ElButler.Tasks do
       [{_name, num}] -> num
       _ -> 0
     end
+    :dets.close(:chapters)
   end
 
   def set_last_chapter(name, chapternum) do
     {:ok, table} = :dets.open_file(:chapters, type: :set)
     :dets.insert(table, {name, chapternum})
+    :dets.close(:chapters)
   end
 end
