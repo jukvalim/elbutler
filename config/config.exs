@@ -6,13 +6,11 @@ config :logger,
 config :elbutler, ElButler.Scheduler,
   timezone: "Europe/Helsinki",
   jobs: [
-    # {"@hourly", fn -> ElButler.Tasks.check_worth_the_candle() end},
     {"@hourly", {ElButler.Tasks, :check_worth_the_candle, []}},
-    # {"@hourly", fn -> ElButler.Tasks.check_hoc() end},
     {"@hourly", {ElButler.Tasks, :check_hoc, []}},
     {"@hourly", {ElButler.Tasks, :check_dcc, []}},
-    # {"@hourly", fn -> ElButler.Tasks.check_pod() end}
     {"@hourly", {ElButler.Tasks, :check_pod, []}}
+    {"@hourly", {ElButler.Tasks, :check_fod, []}}
     # {"* * * * *",      fn ->  System.cmd("say", [("minute " <> Integer.to_string DateTime.utc_now().minute)]) end},
     # {{:extended, "* * * * *"}, fn -> System.cmd("say", [Integer.to_string DateTime.utc_now().second]) end},
     # Every minute
