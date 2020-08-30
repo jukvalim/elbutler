@@ -9,7 +9,7 @@ config :elbutler, ElButler.Scheduler,
     {"@hourly", {ElButler.Tasks, :check_worth_the_candle, []}},
     {"@hourly", {ElButler.Tasks, :check_hoc, []}},
     {"@hourly", {ElButler.Tasks, :check_dcc, []}},
-    {"@hourly", {ElButler.Tasks, :check_pod, []}}
+    {"@hourly", {ElButler.Tasks, :check_pod, []}},
     {"@hourly", {ElButler.Tasks, :check_fod, []}}
     # {"* * * * *",      fn ->  System.cmd("say", [("minute " <> Integer.to_string DateTime.utc_now().minute)]) end},
     # {{:extended, "* * * * *"}, fn -> System.cmd("say", [Integer.to_string DateTime.utc_now().second]) end},
