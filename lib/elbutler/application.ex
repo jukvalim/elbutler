@@ -9,6 +9,7 @@ defmodule ElButler.Application do
       ElButler.Scheduler,
       {Plug.Cowboy, scheme: :http, plug: ElButler.HelloWorldPlug, options: [port: 4000]}
     ]
+
     opts = [strategy: :one_for_one, name: ElButler.Supervisor]
     Supervisor.start_link(children, opts)
   end

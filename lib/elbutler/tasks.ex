@@ -80,8 +80,10 @@ defmodule ElButler.Tasks do
     case cd do
       [chapter_num, chapter_id] ->
         send_new_chapter_notification(name, chapter_url_template, chapter_id, chapter_num)
+
       [chapter_id] ->
         send_new_chapter_notification(name, chapter_url_template, chapter_id)
+
       _ ->
         ElButler.Notifications.notify_phone("Can't find #{name} chapter number...")
         {:error, "Can't find #{name} chapter number..."}
@@ -103,11 +105,9 @@ defmodule ElButler.Tasks do
 
       ElButler.Notifications.notify_phone("New Chapter of #{name} is in! #{new_chapter_url}")
       {:new_chapters, chapter_num}
-
     else
       {:no_new_chapters, chapter_num}
     end
-
   end
 
   def extract_chapter_data(body, chapter_regex) do

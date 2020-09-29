@@ -4,7 +4,6 @@ defmodule ElButler.HelloWorldPlug do
   # Serving HTTP is not necessary for functioning of the app, the plug was added
   # just to get the app running in Gigalixir
 
-
   def init(options), do: options
 
   def call(conn, _opts) do
