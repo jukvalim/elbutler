@@ -1,7 +1,7 @@
 defmodule ElButler.Tasks do
   @wtc_chapter_regex ~r|<dd class="chapters">.*>(?<chapter>[[:digit:]]+)</a>[/\w]|
   @hoc_chapter_regex ~r|/fiction/32502/heart-of-cultivation/chapter/(?<chapter_id>[[:digit:]]+)/(?<chapter>[[:digit:]]+)-|
-  @dcc_chapter_regex ~r|/fiction/29358/dungeon-crawler-carl/chapter/(?<chapter_id>[[:digit:]]+)/chapter-(?<chapter>[[:digit:]]+)|
+  @dcc_chapter_regex ~r|/fiction/29358/dungeon-crawler-carl-book-2-carls-doomsday-scenario/chapter/(?<chapter_id>[[:digit:]]+)/chapter-(?<chapter>[[:digit:]]+)|
   @pod_chapter_regex ~r|<a class='chapter-item' href="/Paragon-of-Destruction/(?<chapter_id>[[:digit:]]+).html"><div class='chapter-info'><p class='chapter-name'>(?<chapter>[[:digit:]]+) [\w\s]+</p></div></a>|
   @fod_chapter_regex ~r|/fiction/21188/forge-of-destiny/chapter/(?<chapter_id>[[:digit:]]+)/|
 
