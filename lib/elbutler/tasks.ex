@@ -4,6 +4,7 @@ defmodule ElButler.Tasks do
   @dcc_chapter_regex ~r|/fiction/29358/dungeon-crawler-carl-book-2-carls-doomsday-scenario/chapter/(?<chapter_id>[[:digit:]]+)/chapter-(?<chapter>[[:digit:]]+)|
   @pod_chapter_regex ~r|<a class='chapter-item' href="/Paragon-of-Destruction/(?<chapter_id>[[:digit:]]+).html"><div class='chapter-info'><p class='chapter-name'>(?<chapter>[[:digit:]]+) [\w\s]+</p></div></a>|
   @fod_chapter_regex ~r|/fiction/21188/forge-of-destiny/chapter/(?<chapter_id>[[:digit:]]+)/|
+  @hwfm_chapter_regex ~r|/fiction/26294/he-who-fights-with-monsters/chapter/(?<chapter_id>[[:digit:]]+)/|
 
   def check_worth_the_candle() do
     check_webfiction(
@@ -46,6 +47,15 @@ defmodule ElButler.Tasks do
       "FoD",
       @fod_chapter_regex,
       "https://www.royalroad.com/fiction/21188/forge-of-destiny/chapter/{chapter_id}/chapter-1"
+    )
+  end
+
+  def check_hwfm() do
+    check_webfiction_index(
+      "https://www.royalroad.com/fiction/26294/he-who-fights-with-monsters/",
+      "HWFM",
+      @hwfm_chapter_regex,
+      "https://www.royalroad.com/fiction/26294/he-who-fights-with-monsters/chapter/{chapter_id}/chapter-1-strange-business"
     )
   end
 
