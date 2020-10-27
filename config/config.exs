@@ -11,6 +11,7 @@ config :elbutler, ElButler.Scheduler,
     {"@hourly", {ElButler.Tasks, :check_dcc, []}},
     {"@hourly", {ElButler.Tasks, :check_pod, []}},
     {"@hourly", {ElButler.Tasks, :check_fod, []}}
+    {"@hourly", {ElButler.Tasks, :check_hwfm, []}}
     # {"* * * * *",      fn ->  System.cmd("say", [("minute " <> Integer.to_string DateTime.utc_now().minute)]) end},
     # {{:extended, "* * * * *"}, fn -> System.cmd("say", [Integer.to_string DateTime.utc_now().second]) end},
     # Every minute
