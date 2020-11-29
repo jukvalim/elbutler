@@ -5,8 +5,7 @@ defmodule ElButler.Application do
     import Supervisor.Spec, warn: false
 
     children = [
-      # This is the new line
-      ElButler.Scheduler,
+      ElButler.Supervisor,
       {Plug.Cowboy, scheme: :http, plug: ElButler.HelloWorldPlug, options: [port: 4000]}
     ]
 
