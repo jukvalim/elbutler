@@ -12,7 +12,6 @@ defmodule ElButler.Scheduler do
     GenServer.start_link(__MODULE__, {frequency, tasks})
   end
 
-
   # Server (callbacks)
 
   @impl true
@@ -33,5 +32,4 @@ defmodule ElButler.Scheduler do
   defp schedule(frequency) do
     Process.send_after(self(), :run_tasks, frequency)
   end
-
 end

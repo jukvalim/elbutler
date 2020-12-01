@@ -25,3 +25,6 @@ elbutler-*.tar
 .elixir_ls
 
 config/dev.exs
+
+# dets file
+chapters
