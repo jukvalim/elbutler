@@ -22,6 +22,7 @@ defmodule ElButler.Scheduler do
 
   @impl true
   def handle_info(:run_tasks, {frequency, tasks}) do
+    IO.puts("handle_info")
     schedule(frequency)
     awaitables = for t <- tasks, do: Task.async(t)
     for a <- awaitables, do: Task.await(a)
