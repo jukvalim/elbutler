@@ -24,7 +24,7 @@ defmodule ElButler.Scheduler do
   def handle_info(:run_tasks, {frequency, tasks}) do
     schedule(frequency)
     awaitables = for t <- tasks, do: Task.async(t)
-    Task.await_many(awaitables)
+    for a <- awaitables, do: Task.await(a)
 
     {:noreply, {frequency, tasks}}
   end
