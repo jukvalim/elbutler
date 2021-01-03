@@ -1,34 +1,15 @@
 defmodule ElButler.Tasks do
   @wtc_chapter_regex ~r|<dd class="chapters">.*>(?<chapter>[[:digit:]]+)</a>[/\w]|
-  @hoc_chapter_regex ~r|/fiction/32502/heart-of-cultivation/chapter/(?<chapter_id>[[:digit:]]+)/(?<chapter>[[:digit:]]+)-|
-  @dcc_chapter_regex ~r|/fiction/29358/dungeon-crawler-carl-book-2-carls-doomsday-scenario/chapter/(?<chapter_id>[[:digit:]]+)/chapter-(?<chapter>[[:digit:]]+)|
   @pod_chapter_regex ~r|<a class='chapter-item' href="/Paragon-of-Destruction/(?<chapter_id>[[:digit:]]+).html"><div class='chapter-info'><p class='chapter-name'>(?<chapter>[[:digit:]]+) [\w\s]+</p></div></a>|
   @fod_chapter_regex ~r|/fiction/21188/forge-of-destiny/chapter/(?<chapter_id>[[:digit:]]+)/|
   @hwfm_chapter_regex ~r|/fiction/26294/he-who-fights-with-monsters/chapter/(?<chapter_id>[[:digit:]]+)/|
+  @rm_chapter_regex ~r|/fiction/37951/re-monarch/chapter/(?<chapter_id>[[:digit:]]+)/|
 
   def check_worth_the_candle() do
     check_webfiction(
       "https://archiveofourown.org/works/11478249/chapters/25740126",
       "WtC",
       @wtc_chapter_regex
-    )
-  end
-
-  def check_hoc() do
-    check_webfiction_index(
-      "https://www.royalroad.com/fiction/32502/heart-of-cultivation",
-      "HoC",
-      @hoc_chapter_regex,
-      "https://www.royalroad.com/fiction/32502/heart-of-cultivation/chapter/{chapter_id}/1-a-fallen-prodigy-1"
-    )
-  end
-
-  def check_dcc() do
-    check_webfiction_index(
-      "https://www.royalroad.com/fiction/29358/dungeon-crawler-carl",
-      "DCC",
-      @dcc_chapter_regex,
-      "https://www.royalroad.com/fiction/29358/dungeon-crawler-carl/chapter/{chapter_id}/chapter-1"
     )
   end
 
@@ -56,6 +37,15 @@ defmodule ElButler.Tasks do
       "HWFM",
       @hwfm_chapter_regex,
       "https://www.royalroad.com/fiction/26294/he-who-fights-with-monsters/chapter/{chapter_id}/chapter-1-strange-business"
+    )
+  end
+
+  def check_rm() do
+    check_webfiction_index(
+      "https://www.royalroad.com/fiction/37951/re-monarch",
+      "RM",
+      @rm_chapter_regex,
+      "https://www.royalroad.com/fiction/37951/re-monarch/chapter/{chapter_id}/1-prologue"
     )
   end
 
